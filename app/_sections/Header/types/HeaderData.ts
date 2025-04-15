@@ -6,6 +6,7 @@ export type HeaderData = {
   tagLine?: string;
   buttons: ButtonSettingsData[];
   imgUrl?: string;
+  videoUrl?: string;
   background: string;
   backgroundColor?: string;
   textColor?: string;

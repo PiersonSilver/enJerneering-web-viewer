@@ -19,6 +19,7 @@ const HeaderType3: React.FC<HeaderProps> = ({ data }) => {
     tagLine,
     imgUrl,
     isRowReverse = false,
+    videoUrl = "",
     backgroundColor,
     textColor
   } = data;
@@ -42,12 +43,14 @@ const HeaderType3: React.FC<HeaderProps> = ({ data }) => {
           <ButtonActions buttons = {buttons}/>
         </div>
         <div className="mx-auto max-w-screen-xl mt-10 lg:h-full lg:w-1/2 lg:mt-0">
-          <Image
-            src={imgUrl as unknown as StaticImageData}
-            width={600}
-            height={464}
-            alt="Header image"
-            className="w-full h-auto object-cover rounded-xl"
+          <ModalVideo
+            thumb={imgUrl as unknown as StaticImageData}
+            thumbWidth={1280}
+            thumbHeight={460}
+            thumbAlt="video thumbnail"
+            video={videoUrl}
+            videoWidth={1920}
+            videoHeight={1080}
           />
         </div>
       </div>
