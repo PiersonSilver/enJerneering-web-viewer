@@ -3,12 +3,13 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import FooterType1 from "@components/Footer/_FooterType1";
-import HeaderType1 from "@components/Header/_HeaderType1";
-import ContactType1 from "@components/Contact/_ContactType1";
-import CallToActionType1 from "@components/CallToAction/_CallToActionType1";
-import MainContentType1 from "@components/MainContent/_MainContentType1";
 import { createClient } from "@internalSupabase/client";
 import TextBoxType from "@components/TextBox/_TextBox";
+import { ProjectProvider } from "@providers/ProjectContext"
+import Header from "@components/Header";
+import CallToAction from "@components/CallToAction";
+import Contact from "@components/Contact";
+import MainContent from "@components/MainContent";
 
 //added for successful build
 export const dynamic = "force-dynamic";
@@ -121,19 +122,19 @@ const PageViewer = () => {
     fetchData();
   }, [projectId]);
 
-  const renderSection = (layer: { content: string; componentType: string }) => {
+  const renderSection = (layer: { content: string; componentType: string, styleVariant: number}) => {
     try {
       const layerContent = JSON.parse(layer.content);
 
       switch (layer.componentType) {
         case "Header":
-          return <HeaderType1 key={layer.componentType} data={layerContent} />;
+          return <Header type={layer.styleVariant} data={layerContent} />;
         case "MainContent":
-          return <MainContentType1 key={layer.componentType} data={layerContent} />;
+          return <MainContent type={layer.styleVariant} data={layerContent} />;
         case "CallToAction":
-          return <CallToActionType1 key={layer.componentType} data={layerContent} />;
+          return <CallToAction type={layer.styleVariant} data={layerContent} />;
         case "Contact":
-          return <ContactType1 key={layer.componentType} data={layerContent} />;
+          return <Contact type={layer.styleVariant} data={layerContent} />;
         case "TextBox":
           return <TextBoxType key={layer.componentType} data={layerContent} />;
         default:
@@ -150,10 +151,12 @@ const PageViewer = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div data-testid="viewer-container" className="h-full w-full">
-        {sections}
-        {footer}
-      </div>
+      <ProjectProvider projectId={projectId}>
+        <div data-testid="viewer-container" className="h-full w-full">
+          {sections}
+          {footer}
+        </div>
+      </ProjectProvider>
     </Suspense>
   );
 };
