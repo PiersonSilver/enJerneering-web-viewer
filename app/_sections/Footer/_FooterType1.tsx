@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { FooterData, Navigation } from "./types/FooterData";
 import { classNames } from "@/_utils/helpers";
+import { useProject } from "@providers/ProjectContext";
 
 interface FooterProps {
   data: FooterData;
@@ -19,6 +20,8 @@ const FooterType1: React.FC<FooterProps> = ({ data }) => {
     copyRight,
     showContentFlags,
   } = data;
+
+  const { projectId } = useProject();
 
   const columns = 3;
   const splitNavigation = Array.from({ length: columns }, (_, i) =>
@@ -66,7 +69,7 @@ const FooterType1: React.FC<FooterProps> = ({ data }) => {
                   {column.map((item, index) => (
                     <li key={index}>
                       <a
-                        href={item.href}
+                        href={`/viewer/${projectId}${item.href}`}
                         className="text-base font-normal text-neutral-500 hover:text-neutral-800"
                       >
                         {item.title}
