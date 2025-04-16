@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ContactData } from "./types/ContactData";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 
@@ -20,7 +20,7 @@ const ContactType5: React.FC<ContactProps> = ({ data }) => {
     mailLabel = "Default label",
     phoneLabel = "Default label",
     imgUrl = "default-image.jpg",
-    mapSrc = "default maps",
+    mapSrc,
   } = data;
 
   return (

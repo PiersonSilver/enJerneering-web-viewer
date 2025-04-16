@@ -27,7 +27,8 @@ const ContactType4: React.FC<ContactProps> = ({ data }) => {
     emailField,
     phoneField,
     messageField,
-    textColor
+    textColor,
+    mapSrc
   } = data;
 
   // add requried fields to be passed through to FormContact
@@ -44,7 +45,7 @@ const requiredFields = {nameField, emailField, phoneField, messageField, mail }
         </div>
         <div className="mx-auto w-full md:max-w-screen-xl lg:max-w-none grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
           <div>
-            {/* <iframe
+            { <iframe
               src={mapSrc}
               width="656"
               height="436"
@@ -52,7 +53,7 @@ const requiredFields = {nameField, emailField, phoneField, messageField, mail }
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-            ></iframe> */}
+            ></iframe> }
           </div>
           <div>
             <FormContact requiredFields={requiredFields} />
