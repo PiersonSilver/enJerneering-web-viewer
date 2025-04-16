@@ -95,12 +95,18 @@ const DebugPage: React.FC = () => {
       if (!projectData) throw new Error("Project not found");
   
       // 2. Designs
-      const { data: designData } = await supabase
-        .from("designs")
-        .select("*")
-        .eq("projectId", projectId);
-  
-      const designIds = designData?.map((d) => d.designId) || [];
+      const { data: latestDesign } = await supabase
+      .from("designs")
+      .select("*")
+      .eq("projectId", projectId)
+      .order("createdAt", { ascending: false })
+      .limit(1)
+      .single();
+
+      if (!latestDesign) throw new Error("No design found");
+
+      const designData = [latestDesign]; 
+      const designIds = [latestDesign.designId];
   
       // 3. Pages
       const { data: pagesData } = await supabase
