@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ type, data }) => {
       case 3:
         return <FooterType3 data={data} />;
       case 4:
-        return <FooterType4 />
+        return <FooterType4 data={data} />
       default:
         throw new Error(`Footer type ${type} is not supported`);
     }
