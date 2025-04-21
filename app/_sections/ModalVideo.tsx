@@ -5,6 +5,7 @@ import type { StaticImageData } from "next/image";
 import ReactPlayer from "react-player";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
+import React from "react";
 
 interface ModalVideoProps {
   thumb: StaticImageData;
