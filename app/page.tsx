@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../supabase/client";
+import { footerData, footerType, navbarData, navbarType } from "@components/meta";
 
 const supabase = createClient();
 
@@ -140,9 +141,15 @@ const DebugPage: React.FC = () => {
       const exportData = {
         projectData,
         serviceData,
-        footerData: webElementsData?.footerData
-          ? JSON.parse(webElementsData.footerData)
-          : {},
+        webElementsData: {
+          projectId,
+          navbarType,
+          navbarData: webElementsData?.navBarData?
+            JSON.parse(webElementsData?.navBarData) : {},
+          footerType,
+          footerData: webElementsData?.footerData?
+            JSON.parse(webElementsData?.footerData) : {},
+        },
         designData,
         pagesData,
         layerData,
