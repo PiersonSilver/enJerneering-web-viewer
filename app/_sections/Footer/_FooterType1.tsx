@@ -49,6 +49,7 @@ const FooterType1: React.FC<FooterProps> = ({ data }) => {
                     <a
                       key={item.name}
                       href={item.url}
+                      target="_blank"
                       className="text-neutral-400 hover:text-neutral-500"
                     >
                       <span className="sr-only">{item.name}</span>
@@ -69,7 +70,7 @@ const FooterType1: React.FC<FooterProps> = ({ data }) => {
                   {column.map((item, index) => (
                     <li key={index}>
                       <a
-                        href={item.href}
+                        href={`/viewer/${projectId}${item.href}`}
                         className="text-base font-normal text-neutral-500 hover:text-neutral-800"
                       >
                         {item.title}

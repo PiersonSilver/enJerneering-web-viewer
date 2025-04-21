@@ -10,6 +10,8 @@ import Header from "@components/Header";
 import CallToAction from "@components/CallToAction";
 import Contact from "@components/Contact";
 import MainContent from "@components/MainContent";
+import Footer from "@components/Footer";
+import Navbar from "@components/Navbar";
 
 //added for successful build
 export const dynamic = "force-dynamic";
@@ -26,6 +28,7 @@ const PageViewer = () => {
     const { projectId, pageTitle } = useParams() as { projectId: string; pageTitle: string };;
     const [sections, setSections] = useState<JSX.Element[]>([]);
     const [footer, setFooter] = useState<JSX.Element[]>([]);
+    const [navbar, setNavbar] = useState<JSX.Element[]>([]);
 
     const parsedPageTitle = pageTitle.replace("-", " ");
     
@@ -101,11 +104,22 @@ const PageViewer = () => {
 
         console.log("Layer Data:", layerData);
 
+        const navBarType = webElementsData?.navbarType? webElementsData.navbarType : 1;
+
+        const parsedNavbarData = webElementsData?.navBarData
+          ? JSON.parse(webElementsData.navBarData)
+          : null;
+
+        parsedNavbarData? setNavbar([<Navbar type={navBarType} data={parsedNavbarData} typeSubLink={0} />]) : setNavbar([]);
+
+        const footerType = webElementsData?.footerType? webElementsData.footerType : 1;
+
+
         const parsedFooterData = webElementsData?.footerData
           ? JSON.parse(webElementsData.footerData)
           : null;
 
-        parsedFooterData? setFooter([<FooterType1 key={"footer"} data={parsedFooterData} />]) : setFooter([]);
+        parsedFooterData? setFooter([<Footer type={footerType} data={parsedFooterData} />]) : setFooter([]);
 
         console.log("Footer Data:", parsedFooterData);
 
@@ -153,6 +167,7 @@ const PageViewer = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <ProjectProvider projectId={projectId}>
         <div data-testid="viewer-container" className="h-full w-full">
+          {navbar}
           {sections}
           {footer}
         </div>

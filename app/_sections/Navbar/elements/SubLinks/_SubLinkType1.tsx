@@ -61,7 +61,7 @@ const SubLinkMobile: React.FC<SubLinkComponentProps> = ({
  * @returns
  */
 const SubLinkWeb: React.FC<SubLinkComponentProps> = ({ title, subLinks }) => (
-  <Popover className="relative">
+  <Popover className="relative flex-shrink-0">
     {({ open }) => (
       <>
         <Popover.Button className="flex items-center gap-x-1 text-base font-semibold leading-8 text-gray-900 hover:text-primary-700 transition-all duration-300 ease-in-out focus:border-0 focus:outline-0 focus:text-primary-700">
