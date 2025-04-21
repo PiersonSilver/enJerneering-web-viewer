@@ -66,6 +66,7 @@ const DebugPage: React.FC = () => {
       .single();
 
     if (!error && data?.projectTitle) {
+      console.log("✅ Found Project Title:", data.projectTitle);
       const newProject: Project = { projectId: id, projectTitle: data.projectTitle };
       const updatedProjects = [newProject, ...recentProjects.filter((p) => p.projectId !== id)].slice(0, 5);
 
