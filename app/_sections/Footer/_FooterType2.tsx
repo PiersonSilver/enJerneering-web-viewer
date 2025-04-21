@@ -6,6 +6,8 @@ import { FooterData, Navigation } from "./types/FooterData";
 import Button from "../Button";
 import useRedirect from "@/_hooks/useRedirect";
 import { classNames } from "@/_utils/helpers";
+import { useProject } from "@providers/ProjectContext";
+
 
 interface FooterProps {
   data: FooterData;
@@ -22,6 +24,9 @@ const FooterType2: React.FC<FooterProps> = ({ data }) => {
     ctaButtonUrl = "/",
     showContentFlags,
   } = data;
+
+    const {projectId} = useProject();
+  
 
   const [email, setEmail] = useState("");
 
@@ -44,8 +49,8 @@ const FooterType2: React.FC<FooterProps> = ({ data }) => {
                     {column.map((item, idx) => (
                       <li key={idx}>
                         <a
-                          href={item.href}
-                          className="text-base font-normal text-neutral-500 hover:text-neutral-800"
+                        href={`/viewer/${projectId}${item.href}`}
+                        className="text-base font-normal text-neutral-500 hover:text-neutral-800"
                         >
                           {item.title}
                         </a>
@@ -114,6 +119,7 @@ const FooterType2: React.FC<FooterProps> = ({ data }) => {
                   <a
                     key={item.name}
                     href={item.url}
+                    target="_blank"
                     className="text-neutral-400 hover:text-neutral-500"
                   >
                     <span className="sr-only">{item.name}</span>

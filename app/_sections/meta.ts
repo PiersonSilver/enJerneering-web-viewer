@@ -122,11 +122,7 @@ export const navbarData: NavbarData = {
     { id: nanoid(), title: "Link 5", href: "#" },
     { id: nanoid(), title: "Link 6", href: "#" },
   ],
-  ctaButton: {
-    label: "Get Started",
-    href: "/",
-    color: "primary",
-  },
+  buttons: [],
   featuredData: [
     {
       imgUrl: "/img/cryo.jpeg",
@@ -144,9 +140,7 @@ export const navbarData: NavbarData = {
     },
   ],
   justifyContent: "center",
-  showContentFlags: {
-    ctaButton: "on",
-  },
+  isCtaButton: "on",
 };
 
 // Main Content
