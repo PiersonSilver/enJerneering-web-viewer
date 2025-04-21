@@ -20,97 +20,86 @@ const FooterType3: React.FC<FooterProps> = ({ data }) => {
     showContentFlags,
   } = data;
 
-  const groupedNavigation: { [key: string]: Navigation[] } = {};
-
-  navigation.forEach((item) => {
-    const pageGroup = item.pageGroup || "Default";
-    if (!groupedNavigation[pageGroup]) {
-      groupedNavigation[pageGroup] = [];
-    }
-    groupedNavigation[pageGroup].push(item);
-  });
-
-  return (
-    <div className="z-30 bg-gray-50">
-      <footer aria-labelledby="footer-heading">
-        <h2 id="footer-heading" className="sr-only">
-          Footer
-        </h2>
-        <div>
-          <div className="flex flex-col gap-8 px-6 py-10 lg:px-20 xl:flex-row xl:gap-20">
-            <div className="flex flex-col space-y-6 flex-shrink-0 xl:max-w-[480px] pb-6 border-b xl:border-r xl:border-b-0 xl:pr-20 border-neutral-800/10">
-              <Image src={logo} alt="Logo" width={230} height={48} />
-              {showContentFlags.slogan === "on" && (
-                <p className="text-base font-normal text-neutral-500">
-                  {slogan}
-                </p>
-              )}
-              {showContentFlags.copyRight === "on" && (
-                <p className="text-base font-normal text-neutral-500">
-                  {copyRight}
-                </p>
-              )}
-            </div>
-            <div className="flex-1 grid grid-cols-2 xl:col-span-3 gap-8">
-              {Object.entries(groupedNavigation).map(
-                ([pageGroup, navigation], index) => (
-                  <div key={index}>
-                    <h3 className="uppercase text-base font-semibold text-neutral-800">
-                      {pageGroup}
-                    </h3>
-                    <ul role="list" className="mt-6 space-y-4">
-                      {navigation.map((item, index) => (
-                        <li key={index}>
-                          <a
-                            href={item.href}
-                            className="text-base font-normal text-neutral-500 hover:text-neutral-800"
-                          >
-                            {item.title}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )
-              )}
-            </div>
+  const columns = 3;
+  const splitNavigation = Array.from({ length: columns }, (_, i) =>
+    navigation.filter((_, index) => index % columns === i)
+  );
+return (
+  <div className="z-30 bg-gray-50">
+    <footer aria-labelledby="footer-heading">
+      <h2 id="footer-heading" className="sr-only">
+        Footer
+      </h2>
+      <div>
+      <div className="flex flex-col gap-8 px-6 py-10 lg:px-20 xl:flex-row xl:gap-20 xl:flex-nowrap">
+        <div className="flex flex-col space-y-6 flex-shrink-0 xl:max-w-[480px] w-full xl:w-auto min-w-0 pb-6 border-b xl:border-r xl:border-b-0 xl:pr-20 border-neutral-800/10">
+          <Image src={logo} alt="Logo" width={230} height={48} />
+            {showContentFlags.slogan === "on" && (
+              <p className="text-base font-normal text-neutral-500 w-full break-words max-w-full overflow-hidden text-ellipsis">
+                {slogan}
+              </p>
+            )}
+            {showContentFlags.copyRight === "on" && (
+              <p className="text-base font-normal text-neutral-500">
+                {copyRight}
+              </p>
+            )}
           </div>
-          <div className="flex flex-wrap gap-6 justify-between px-6 lg:px-20 py-6 bg-neutral-800">
-            <div className="flex flex-wrap flex-shrink-0 gap-4 lg:justify-center min-w-[200px] w-full">
-              {polices.map((item, index) => (
+          <div className="flex-1 min-w-0 grid grid-cols-2 xl:grid-cols-3 gap-8">
+            {splitNavigation.map((column, colIndex) => (
+              <div key={colIndex}>
+                <ul role="list" className="space-y-4">
+                  {column.map((item, index) => (
+                    <li key={index}>
+                      <a
+                        href={item.href}
+                        className="text-base font-normal text-neutral-500 hover:text-neutral-800"
+                      >
+                        {item.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-6 justify-between px-6 lg:px-20 py-6 bg-neutral-800">
+          <div className="flex flex-wrap flex-shrink-0 gap-4 lg:justify-center min-w-[200px] w-full">
+            {polices.map((item, index) => (
+              <a
+                key={index}
+                href={item.url}
+                className="text-base font-normal text-gray-50 hover:text-neutral-500"
+              >
+                {item.title}
+              </a>
+            ))}
+          </div>
+          {showContentFlags.socials === "on" && (
+            <div className="flex space-x-4">
+              {socials.map((item) => (
                 <a
-                  key={index}
+                  key={item.name}
                   href={item.url}
-                  className="text-base font-normal text-gray-50 hover:text-neutral-500"
+                  className="text-neutral-400 hover:text-neutral-500"
                 >
-                  {item.title}
+                  <span className="sr-only">{item.name}</span>
+                  <i
+                    className={classNames(
+                      "pi text-gray-50 text-[24px]",
+                      item.icon
+                    )}
+                  />
                 </a>
               ))}
             </div>
-            {showContentFlags.socials === "on" && (
-              <div className="flex space-x-4">
-                {socials.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.url}
-                    className="text-neutral-400 hover:text-neutral-500"
-                  >
-                    <span className="sr-only">{item.name}</span>
-                    <i
-                      className={classNames(
-                        "pi text-gray-50 text-[24px]",
-                        item.icon
-                      )}
-                    />
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
+          )}
         </div>
-      </footer>
-    </div>
-  );
+      </div>
+    </footer>
+  </div>
+);
 };
 
 export default FooterType3;
