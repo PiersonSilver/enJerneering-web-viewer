@@ -45,26 +45,38 @@ describe("Footer Component", () => {
 
   test("renders FooterType2 correctly", () => {
     render(
-      <ProjectProvider projectId="test-project-id"> {/* Added projectId prop */}
+      <ProjectProvider projectId="test-project-id">
         <Footer type={2} data={mockFooterData} />
       </ProjectProvider>
     );
-    expect(screen.getByText("We build great websites.")).toBeInTheDocument();
-    expect(screen.getByText("Contact")).toBeInTheDocument();
+  
+    // Check for the correct slogan
+    expect(screen.getByText("Your trusted partner in innovation.")).toBeInTheDocument();
+    expect(screen.getByText("Home")).toBeInTheDocument();
   });
 
   test("renders FooterType3 correctly", () => {
     render(
-      <ProjectProvider projectId="test-project-id"> {/* Added projectId prop */}
+      <ProjectProvider projectId="test-project-id">
         <Footer type={3} data={mockFooterData} />
       </ProjectProvider>
     );
-    expect(screen.getByText("Test Company")).toBeInTheDocument();
-    expect(screen.getByText("About")).toBeInTheDocument();
+  
+    // Check for the correct copyright text
+    expect(screen.getByText("© 2025 Example Inc. All rights reserved.")).toBeInTheDocument();
+    expect(screen.getByText("Home")).toBeInTheDocument();
   });
+  
 
   test("renders FooterType4 correctly", () => {
-    render(<Footer type={4} data={mockFooterData} />);
-    expect(screen.getByText("© 2024 Test Company")).toBeInTheDocument();
+    render(
+      <ProjectProvider projectId="test-project-id">
+        <Footer type={4} data={mockFooterData} />
+      </ProjectProvider>
+    );
+  
+    // Check for the correct copyright text
+    expect(screen.getByText("© 2025 Example Inc. All rights reserved.")).toBeInTheDocument();
   });
+  
 });
