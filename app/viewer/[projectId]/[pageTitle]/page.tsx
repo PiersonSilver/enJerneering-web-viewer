@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import FooterType1 from "@components/Footer/_FooterType1";
 import { createClient } from "@internalSupabase/client";
 import TextBoxType from "@components/TextBox/_TextBox";
+import PictureType from "@components/Picture/_Picture";
 import { ProjectProvider } from "@providers/ProjectContext"
 import Header from "@components/Header";
 import CallToAction from "@components/CallToAction";
@@ -151,6 +152,8 @@ const PageViewer = () => {
           return <Contact type={layer.styleVariant} data={layerContent} />;
         case "TextBox":
           return <TextBoxType key={layer.componentType} data={layerContent} />;
+        case "Picture":
+          return <PictureType key={layer.componentType} data={layerContent} />;
         default:
           return null;
       }
