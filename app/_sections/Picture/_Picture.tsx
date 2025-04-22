@@ -9,26 +9,16 @@ interface PictureTypeProps {
 }
 
 const PictureType: React.FC<PictureTypeProps> = ({ data }) => {
-  const { src, alt, borderRadius = "0", maxWidth = "100%" } = data;
+  const { src, alt } = data;
 
   return (
-    <div
-      className="flex justify-center items-center w-full"
-      style={{ maxWidth }}
-    >
-      <div style={{ position: "relative", width: "100%", height: "auto" }}>
+    <div className="flex justify-center items-center w-full">
+      <div className="relative w-full aspect-[16/10]">
         <Image
           src={src}
           alt={alt}
-          layout="responsive"
-          width={800}
-          height={500}
-          style={{
-            borderRadius,
-            objectFit: "contain",
-            width: "100%",
-            height: "auto",
-          }}
+          fill
+          style={{ objectFit: "contain" }}
         />
       </div>
     </div>

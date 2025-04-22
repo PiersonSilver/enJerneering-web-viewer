@@ -9,6 +9,7 @@ import CallToActionType1 from "@components/CallToAction/_CallToActionType1";
 import MainContentType1 from "@components/MainContent/_MainContentType1";
 import { createClient } from "@internalSupabase/client";
 import TextBoxType from "@components/TextBox/_TextBox";
+import PictureType from "@components/Picture/_Picture";
 
 //added for successful build
 export const dynamic = "force-dynamic";
@@ -136,6 +137,8 @@ const PageViewer = () => {
           return <ContactType1 key={layer.componentType} data={layerContent} />;
         case "TextBox":
           return <TextBoxType key={layer.componentType} data={layerContent} />;
+        case "Picture":
+          return <PictureType key={layer.componentType} data={layerContent} />;
         default:
           return null;
       }
