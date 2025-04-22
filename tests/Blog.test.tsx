@@ -55,6 +55,24 @@ describe("Blog Component", () => {
       "Blog type 99 is not supported"
     );
   });
+  it("renders BlogType2 correctly", () => {
+    render(<Blog type={2} data={mockBlogData} />);
+    expect(screen.getByText("Tech Insights")).toBeInTheDocument();
+    expect(screen.getByText("AI in 2025")).toBeInTheDocument();
+  });
+  
+  it("renders BlogType3 correctly", () => {
+    render(<Blog type={3} data={mockBlogData} />);
+    expect(screen.getByText("Tech Insights")).toBeInTheDocument();
+    expect(screen.getByText("AI in 2025")).toBeInTheDocument();
+  });
+  
+  it("renders BlogType4 correctly", () => {
+    render(<Blog type={4} data={mockBlogData} />);
+    expect(screen.getByText("Tech Insights")).toBeInTheDocument();
+    expect(screen.getByText("AI in 2025")).toBeInTheDocument();
+  });
+  
 });
 
 describe("BlogItemType1", () => {
