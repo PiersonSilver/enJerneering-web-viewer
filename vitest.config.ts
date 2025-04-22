@@ -11,6 +11,7 @@ export default defineConfig({
       "@providers": path.resolve(__dirname, "app/_providers"),
       "@internalSupabase": path.resolve(__dirname, "supabase"),
       "@": path.resolve(__dirname, "app"),
+      "@enums": path.resolve(__dirname, "app/_lib/enums"),
     },
   },
   test: {
