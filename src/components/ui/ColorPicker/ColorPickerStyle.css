@@ -1,0 +1,56 @@
+/* Custom layout */
+.color-picker.react-colorful {
+  @apply gap-4 w-72;
+}
+
+.color-picker .react-colorful__saturation {
+  @apply border-b-0 rounded-t-lg;
+}
+
+.color-picker .react-colorful__hue,
+.color-picker .react-colorful__alpha {
+  @apply h-3 rounded-full mx-5;
+}
+
+.color-picker .react-colorful__hue-pointer,
+.color-picker .react-colorful__alpha-pointer,
+.color-picker .react-colorful__saturation-pointer {
+  @apply w-5 h-5;
+}
+
+.color-input {
+  @apply flex pl-5 py-4 pr-2.5 items-center;
+}
+
+.color-input .color-format {
+  @apply mr-auto;
+}
+
+.color-input input {
+  @apply inline-block outline-none p-1;
+}
+
+.color-input .hex-input {
+  @apply w-32;
+}
+
+.color-input .hex-alpha {
+  @apply w-13 border-l border-transparent pr-0;
+}
+
+.input-group {
+  @apply ring-1 ring-transparent;
+}
+
+.input-group:hover {
+  @apply ring-neutral-300;
+}
+
+.input-group:hover .hex-alpha,
+.input-group:has(input:focus) .hex-alpha {
+  @apply border-l border-neutral-300;
+}
+
+.input-group:has(input:focus) {
+  @apply ring-primary-600;
+}
