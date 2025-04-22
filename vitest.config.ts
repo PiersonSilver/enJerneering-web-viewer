@@ -60,6 +60,7 @@ export default defineConfig({
         "app/_sections/blog/_BlogType4.tsx",
         "app/_sections/blog/elements/BlogItem/_BlogItemType1.tsx",
         "app/_sections/blog/elements/BlogItem/_BlogItemType2.tsx",
+        "app/_sections/**/*.tsx",
       ],
       exclude: [
         "node_modules/**",
