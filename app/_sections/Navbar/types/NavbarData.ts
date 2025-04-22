@@ -7,7 +7,9 @@ export type NavbarData = {
   featuredData?: FeaturedData[];
   justifyContent: string;
   isCtaButton: string;
+  showContentFlags?: { [key: string]: string }; 
 };
+
 
 export type NavbarMenu = {
   id: string;

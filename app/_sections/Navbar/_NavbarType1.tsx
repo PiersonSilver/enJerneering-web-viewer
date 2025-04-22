@@ -9,6 +9,7 @@ import SubLink from "./elements/SubLinks";
 import ButtonActions from "@components/ButtonActions";
 import { ButtonSettingsData } from "@components/types";
 import { useProject } from "@providers/ProjectContext";
+import React from "react";
 
 interface NavbarProps {
   type: number;
