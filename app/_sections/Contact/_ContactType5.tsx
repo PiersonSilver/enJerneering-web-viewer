@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ContactData } from "./types/ContactData";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 
@@ -11,26 +11,23 @@ interface ContactProps {
 
 const ContactType5: React.FC<ContactProps> = ({ data }) => {
   const {
-    title = "Default Title",
-    subtitle = "Default Subtitle",
-    phone = "+123456789",
-    mail = "contact@enjerneering.com",
-    address = "Default address",
-    addressLabel = "Default label",
-    mailLabel = "Default label",
-    phoneLabel = "Default label",
-    imgUrl = "default-image.jpg",
-    mapSrc = "default maps",
+    title,
+    subtitle,
+    phone,
+    mail,
+    address,
+    mapSrc,
+    textColor
   } = data;
 
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-[1440px] px-6 py-20 lg:p-20 flex flex-col gap-10">
         <div className="mx-auto w-full md:max-w-screen-xl lg:max-w-none text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-800 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-800 sm:text-4xl" style={{color: textColor}}>
             {title}
           </h2>
-          <p className="mt-6 text-base text-neutral-500">{subtitle}</p>
+          <p className="mt-6 text-base text-neutral-500" style={{color: textColor}}>{subtitle}</p>
         </div>
         <div className="mx-auto w-full md:max-w-screen-xl lg:max-w-none grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-20">
           <div>
@@ -42,9 +39,6 @@ const ContactType5: React.FC<ContactProps> = ({ data }) => {
                 <div className="flex flex-col gap-1">
                   <span className="text-xl font-semibold text-neutral-800">
                     Address
-                  </span>
-                  <span className="text-sm font-semibold text-neutral-500">
-                    {addressLabel}
                   </span>
                   <span className="text-sm font-bold text-neutral-800">
                     {address}
@@ -60,9 +54,6 @@ const ContactType5: React.FC<ContactProps> = ({ data }) => {
                   <span className="text-xl font-semibold text-neutral-800">
                     Email
                   </span>
-                  <span className="text-sm font-semibold text-neutral-500">
-                    {mailLabel}
-                  </span>
                   <span className="text-sm font-bold text-neutral-800">
                     <a href={`mailto:${mail}`}>{mail}</a>
                   </span>
@@ -76,9 +67,6 @@ const ContactType5: React.FC<ContactProps> = ({ data }) => {
                 <div className="flex flex-col gap-1">
                   <span className="text-xl font-semibold text-neutral-800">
                     Phone
-                  </span>
-                  <span className="text-sm font-semibold text-neutral-500">
-                    {phoneLabel}
                   </span>
                   <span className="text-sm font-bold text-neutral-800">
                     <a href={`tel:${phone}`}>{phone}</a>

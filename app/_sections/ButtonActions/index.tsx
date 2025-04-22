@@ -4,12 +4,14 @@ import React from "react";
 import useRedirect from "@/_hooks/useRedirect";
 import Button from "@/_sections/Button";
 import { ButtonSettingsData } from "@components/types";
+import { useProject } from "@providers/ProjectContext";
 
 interface ButtonActionsProps {
   buttons?: ButtonSettingsData[]; // Made optional with '?'
 }
 
 const ButtonActions: React.FC<ButtonActionsProps> = ({ buttons = [] }) => {
+  const { projectId } = useProject();
   const { handleRedirect } = useRedirect();
 
   return (
@@ -22,7 +24,7 @@ const ButtonActions: React.FC<ButtonActionsProps> = ({ buttons = [] }) => {
             const formattedURL = externalUrl.startsWith("http") ? externalUrl : `https://${externalUrl}`;
             handleRedirect(formattedURL, true);
           } else if (actionType === "toPage" && pagePath) {
-            handleRedirect(pagePath, false);
+            handleRedirect(`/viewer/${projectId}${pagePath}`, false);
           }
         };
 

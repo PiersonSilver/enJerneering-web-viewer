@@ -6,6 +6,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { classNames } from "@/_utils/helpers";
 import Featured from "../Featured";
 import { SubLink } from "../../types/NavbarData";
+import { NavbarData } from "../../types/NavbarData";
 import { navbarData } from "@components/meta";
 
 interface HeaderProps {

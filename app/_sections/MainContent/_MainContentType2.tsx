@@ -10,19 +10,21 @@ interface MainContentProps {
 
 const MainContentType2: React.FC<MainContentProps> = ({ data }) => {
   const {
-    title = "Default Title",
-    subtitle = "Default Subtitle",
+    title,
+    subtitle,
     gallery = [],
+    textColor,
+    backgroundColor,
   } = data;
 
   return (
-    <div className="bg-gray-50">
+    <div style={{backgroundColor}}>
       <div className="mx-auto max-w-[1440px] px-6 py-20 lg:p-20">
         <div className="mx-auto w-full lg:mx-0 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-800 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-800 sm:text-4xl" style={{ color: textColor }}>
             {title}
           </h2>
-          <p className="mt-4 text-base text-neutral-500">{subtitle}</p>
+          <p className="mt-4 text-base text-neutral-500" style={{ color: textColor }}>{subtitle}</p>
         </div>
 
         <div className="flex flex-col gap-6 mt-10">

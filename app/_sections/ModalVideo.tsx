@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import { useState, useRef, Fragment } from "react";
 import type { StaticImageData } from "next/image";
+import ReactPlayer from "react-player";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 
@@ -22,11 +22,8 @@ export default function ModalVideo({
   thumbHeight,
   thumbAlt,
   video,
-  videoWidth,
-  videoHeight,
 }: ModalVideoProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
     <div className="flex justify-center">
@@ -72,9 +69,8 @@ export default function ModalVideo({
       <Transition
         show={modalOpen}
         as={Fragment}
-        afterEnter={() => videoRef.current?.play()}
       >
-        <Dialog initialFocus={videoRef} onClose={() => setModalOpen(false)}>
+        <Dialog onClose={() => setModalOpen(false)}>
           {/* Modal backdrop */}
           <Transition.Child
             className="fixed inset-0 z-[99999] bg-black bg-opacity-50 transition-opacity"
@@ -100,16 +96,13 @@ export default function ModalVideo({
           >
             <div className="max-w-5xl mx-auto h-full flex items-center">
               <Dialog.Panel className="w-full max-h-full rounded-3xl shadow-2xl aspect-video bg-black overflow-hidden">
-                <video
-                  ref={videoRef}
-                  width={videoWidth}
-                  height={videoHeight}
-                  loop
-                  controls
-                >
-                  <source src={video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+              <ReactPlayer
+                url={video}
+                width="100%"
+                height="100%"
+                controls
+                playing
+              />
               </Dialog.Panel>
             </div>
           </Transition.Child>

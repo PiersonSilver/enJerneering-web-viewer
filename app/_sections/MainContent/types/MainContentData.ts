@@ -5,6 +5,7 @@ export type MainContentData = {
   subHeading?: SubHeading[];
   imgUrl?: string;
   videoUrl?: string;
+  videoThumb?: string;
   gallery?: string[];
   isTagline: string;
   backgroundColor?: string;

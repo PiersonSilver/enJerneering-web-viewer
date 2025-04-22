@@ -3,13 +3,16 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import FooterType1 from "@components/Footer/_FooterType1";
-import HeaderType1 from "@components/Header/_HeaderType1";
-import ContactType1 from "@components/Contact/_ContactType1";
-import CallToActionType1 from "@components/CallToAction/_CallToActionType1";
-import MainContentType1 from "@components/MainContent/_MainContentType1";
 import { createClient } from "@internalSupabase/client";
 import TextBoxType from "@components/TextBox/_TextBox";
 import PictureType from "@components/Picture/_Picture";
+import { ProjectProvider } from "@providers/ProjectContext"
+import Header from "@components/Header";
+import CallToAction from "@components/CallToAction";
+import Contact from "@components/Contact";
+import MainContent from "@components/MainContent";
+import Footer from "@components/Footer";
+import Navbar from "@components/Navbar";
 
 //added for successful build
 export const dynamic = "force-dynamic";
@@ -26,6 +29,7 @@ const PageViewer = () => {
     const { projectId, pageTitle } = useParams() as { projectId: string; pageTitle: string };;
     const [sections, setSections] = useState<JSX.Element[]>([]);
     const [footer, setFooter] = useState<JSX.Element[]>([]);
+    const [navbar, setNavbar] = useState<JSX.Element[]>([]);
 
     const parsedPageTitle = pageTitle.replace("-", " ");
     
@@ -101,11 +105,22 @@ const PageViewer = () => {
 
         console.log("Layer Data:", layerData);
 
+        const navBarType = webElementsData?.navbarType? webElementsData.navbarType : 1;
+
+        const parsedNavbarData = webElementsData?.navBarData
+          ? JSON.parse(webElementsData.navBarData)
+          : null;
+
+        parsedNavbarData? setNavbar([<Navbar type={navBarType} data={parsedNavbarData} typeSubLink={0} />]) : setNavbar([]);
+
+        const footerType = webElementsData?.footerType? webElementsData.footerType : 1;
+
+
         const parsedFooterData = webElementsData?.footerData
           ? JSON.parse(webElementsData.footerData)
           : null;
 
-        parsedFooterData? setFooter([<FooterType1 key={"footer"} data={parsedFooterData} />]) : setFooter([]);
+        parsedFooterData? setFooter([<Footer type={footerType} data={parsedFooterData} />]) : setFooter([]);
 
         console.log("Footer Data:", parsedFooterData);
 
@@ -122,19 +137,19 @@ const PageViewer = () => {
     fetchData();
   }, [projectId]);
 
-  const renderSection = (layer: { content: string; componentType: string }) => {
+  const renderSection = (layer: { content: string; componentType: string, styleVariant: number}) => {
     try {
       const layerContent = JSON.parse(layer.content);
 
       switch (layer.componentType) {
         case "Header":
-          return <HeaderType1 key={layer.componentType} data={layerContent} />;
+          return <Header type={layer.styleVariant} data={layerContent} />;
         case "MainContent":
-          return <MainContentType1 key={layer.componentType} data={layerContent} />;
+          return <MainContent type={layer.styleVariant} data={layerContent} />;
         case "CallToAction":
-          return <CallToActionType1 key={layer.componentType} data={layerContent} />;
+          return <CallToAction type={layer.styleVariant} data={layerContent} />;
         case "Contact":
-          return <ContactType1 key={layer.componentType} data={layerContent} />;
+          return <Contact type={layer.styleVariant} data={layerContent} />;
         case "TextBox":
           return <TextBoxType key={layer.componentType} data={layerContent} />;
         case "Picture":
@@ -153,10 +168,13 @@ const PageViewer = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div data-testid="viewer-container" className="h-full w-full">
-        {sections}
-        {footer}
-      </div>
+      <ProjectProvider projectId={projectId}>
+        <div data-testid="viewer-container" className="h-full w-full">
+          {navbar}
+          {sections}
+          {footer}
+        </div>
+      </ProjectProvider>
     </Suspense>
   );
 };

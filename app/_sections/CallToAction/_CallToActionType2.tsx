@@ -11,11 +11,13 @@ interface CallToActionProps {
 
 const CallToActionType2: React.FC<CallToActionProps> = ({ data }) => {
   const {
-    title = "Default Title",
-    subtitle = "Default Subtitle",
-    tagLine = "Default Tagline",
+    title,
+    subtitle,
+    tagLine,
     buttons,
     imgUrl = "default-image.jpg",
+    isTagline,
+    textColor,
   } = data;
 
   return (
@@ -35,14 +37,16 @@ const CallToActionType2: React.FC<CallToActionProps> = ({ data }) => {
       <div className="max-auto w-full max-w-[1440px] px-6 py-20 lg:p-20 gap-6 md:flex lg:items-center lg:justify-start lg:gap-16 z-10 relative">
         <div className="flex flex-col items-start justify-center gap-6 lg:mt-0 lg:h-full">
           <div className="flex flex-col gap-6">
-            <span className="text-neutral-400 text-base uppercase font-bold">
-              {tagLine}
-            </span>
-            <h1 className="text-5xl leading-h4 text-gray-50">{title}</h1>
-            <h6 className="leading-6 text-neutral-400">{subtitle}</h6>
+            {isTagline === "on" && (
+              <span className="text-neutral-400 text-base uppercase font-bold" style={{color: textColor}}>
+                {tagLine}
+              </span>
+            )}
+            <h1 className="text-5xl leading-h4 text-gray-50" style={{color: textColor}}>{title}</h1>
+            <h6 className="leading-6 text-neutral-400" style={{color: textColor}}>{subtitle}</h6>
           </div>
 
-          <ButtonActions buttons = {buttons}/>
+          <ButtonActions buttons={buttons}/>
         </div>
       </div>
     </div>
