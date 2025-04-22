@@ -11,6 +11,7 @@ export default defineConfig({
       "@providers": path.resolve(__dirname, "app/_providers"),
       "@internalSupabase": path.resolve(__dirname, "supabase"),
       "@": path.resolve(__dirname, "app"),
+      "@enums": path.resolve(__dirname, "app/_lib/enums"),
     },
   },
   test: {
@@ -59,6 +60,7 @@ export default defineConfig({
         "app/_sections/blog/_BlogType4.tsx",
         "app/_sections/blog/elements/BlogItem/_BlogItemType1.tsx",
         "app/_sections/blog/elements/BlogItem/_BlogItemType2.tsx",
+        "app/_sections/**/*.tsx",
       ],
       exclude: [
         "node_modules/**",

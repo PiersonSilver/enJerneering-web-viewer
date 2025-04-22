@@ -1,16 +1,15 @@
-import { ButtonProps } from "@components/Button";
-import { ShowUIState } from "@components/types/common";
+import { ButtonSettingsData } from "@components/types";
 
 export type NavbarData = {
   logo: string;
   menuList: NavbarMenu[];
-  ctaButton: CtaButton;
+  buttons: ButtonSettingsData[];
   featuredData?: FeaturedData[];
   justifyContent: string;
-  showContentFlags: {
-    ctaButton: ShowUIState;
-  };
+  isCtaButton: string;
+  showContentFlags?: { [key: string]: string }; 
 };
+
 
 export type NavbarMenu = {
   id: string;
@@ -23,7 +22,6 @@ export type NavbarMenu = {
 export type CtaButton = {
   label: string;
   href: string;
-  color: ButtonProps["color"];
 };
 
 export type FeaturedData = {

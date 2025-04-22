@@ -5,7 +5,7 @@ import React from "react";
 import { ContactData } from "./types/ContactData";
 import { classNames } from "@/_utils/helpers";
 import FormContact from "./elements/FormContact";
-import { MapPinIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
 interface ContactProps {
   data: ContactData;
@@ -27,70 +27,79 @@ const ContactType3: React.FC<ContactProps> = ({ data }) => {
     emailField,
     phoneField,
     messageField,
-    textColor
+    textColor,
+    mapSrc
   } = data;
 
   // add requried fields to be passed through to FormContact
 const requiredFields = {nameField, emailField, phoneField, messageField, mail }
 
   return (
-    <div className="relative isolate bg-gray-50">
-      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2">
-        <div className="relative px-6 py-20 lg:static lg:p-20">
-          <div className="mx-auto max-w-screen-xl lg:mx-0 lg:max-w-full">
-            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden bg-gray-100 ring-1 ring-gray-900/10 lg:w-1/2">
-              <img
-                className="absolute inset-0 h-full w-full object-cover"
-                src={imgUrl}
-                alt="Background image"
-              />
+    <div className="bg-gray-50">
+      <div className="mx-auto max-w-[1440px] px-6 py-20 lg:p-20 flex flex-col gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-stretch">
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: textColor }}>
+                {title}
+              </h2>
+              <p className="mt-4 text-base text-neutral-500" style={{ color: textColor }}>
+                {subtitle}
+              </p>
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-50 sm:text-4xl">
-              {title}
-            </h2>
-            <p className="mt-4 text-base text-gray-50">{subtitle}</p>
-            <dl className="mt-10 space-y-4 text-base leading-7 text-gray-600">
-              <div className="flex gap-x-4">
-                <dt className="flex-none">
-                  <span className="sr-only">Phone</span>
-                  <i className="pi pi-phone text-gray-50" aria-hidden="true" />
-                </dt>
-                <dd className="text-gray-50">
-                  <a className="hover:text-neutral-800" href={`tel:${phone}`}>
-                    {phone}
-                  </a>
-                </dd>
-              </div>
-              <div className="flex gap-x-4">
-                <dt className="flex-none">
-                  <span className="sr-only">Email</span>
-                  <i
-                    className="pi pi-envelope text-gray-50"
-                    aria-hidden="true"
-                  />
-                </dt>
-                <dd className="text-gray-50">
-                  <a className="hover:text-neutral-800" href={`mailto:${mail}`}>
-                    {mail}
-                  </a>
-                </dd>
-              </div>
-              <div className="flex gap-x-4">
-                <dt className="flex-none">
-                  <span className="sr-only">Address</span>
-                  <MapPinIcon className="w-5 h-5 text-gray-50" />
-                </dt>
-                <dd className="text-gray-50">{address}</dd>
-              </div>
-            </dl>
+            <FormContact requiredFields={requiredFields} />
           </div>
-        </div>
-        <div className="px-6 py-20 lg:p-20">
-          <FormContact requiredFields={requiredFields} />
+
+          <div className="flex flex-col gap-6 h-full">
+            <div className="flex-1 flex">
+              {imgUrl && (
+                <div
+                  className="w-full rounded-2xl bg-cover bg-center shadow-xl min-h-[150px]"
+                  style={{ backgroundImage: `url(${imgUrl})` }}
+                ></div>
+              )}
+            </div>
+
+            {(contactPhone || contactEmail || contactAddress) && (
+              <div className="text-sm text-neutral-700 bg-white p-6 rounded-2xl shadow-md w-full">
+                {contactPhone && (
+                  <div className="flex items-center gap-2 mb-2">
+                    <PhoneIcon className="h-5 w-5 text-neutral-500" />
+                    <span>{phone}</span>
+                  </div>
+                )}
+                {contactEmail && (
+                  <div className="flex items-center gap-2 mb-2">
+                    <EnvelopeIcon className="h-5 w-5 text-neutral-500" />
+                    <span>{mail}</span>
+                  </div>
+                )}
+                {contactAddress && (
+                  <div className="flex items-center gap-2">
+                    <MapPinIcon className="h-5 w-5 text-neutral-500" />
+                    <span>{address}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="flex-1 flex">
+              {mapSrc && (
+                <iframe
+                  src={mapSrc}
+                  className="rounded-2xl w-full shadow-xl min-h-[150px]"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
+
 };
 
 export default ContactType3;

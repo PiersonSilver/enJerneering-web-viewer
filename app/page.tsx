@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../supabase/client";
+import { footerData, footerType, navbarData, navbarType } from "@components/meta";
 
 const supabase = createClient();
 
@@ -58,38 +59,125 @@ const DebugPage: React.FC = () => {
   };
 
   const fetchProjectTitleAndStore = async (id: string, navigate: boolean) => {
-    console.log("🔍 Fetching project title for ID:", id);
-
     const { data, error } = await supabase
-      .from("projects") 
+      .from("projects")
       .select("projectTitle")
       .eq("projectId", id)
       .single();
 
-    console.log("📡 Supabase Response:", data, error);
-
     if (!error && data?.projectTitle) {
       console.log("✅ Found Project Title:", data.projectTitle);
-      
       const newProject: Project = { projectId: id, projectTitle: data.projectTitle };
       const updatedProjects = [newProject, ...recentProjects.filter((p) => p.projectId !== id)].slice(0, 5);
 
       setRecentProjects(updatedProjects);
       localStorage.setItem("recentProjects", JSON.stringify(updatedProjects));
     } else {
-      console.warn("⚠️ Project title not found. Storing without title.");
       const newProject: Project = { projectId: id, projectTitle: "Unnamed Project" };
-
       const updatedProjects = [newProject, ...recentProjects.filter((p) => p.projectId !== id)].slice(0, 5);
       setRecentProjects(updatedProjects);
       localStorage.setItem("recentProjects", JSON.stringify(updatedProjects));
     }
   };
 
+  const downloadJson = async () => {
+    if (!projectId.trim()) {
+      setError("Please enter a valid Project ID.");
+      return;
+    }
+  
+    try {
+      // 1. Project
+      const { data: projectData } = await supabase
+        .from("projects")
+        .select("*")
+        .eq("projectId", projectId)
+        .single();
+  
+      if (!projectData) throw new Error("Project not found");
+  
+      // 2. Designs
+      const { data: latestDesign } = await supabase
+      .from("designs")
+      .select("*")
+      .eq("projectId", projectId)
+      .order("createdAt", { ascending: false })
+      .limit(1)
+      .single();
+
+      if (!latestDesign) throw new Error("No design found");
+
+      const designData = [latestDesign]; 
+      const designIds = [latestDesign.designId];
+  
+      // 3. Pages
+      const { data: pagesData } = await supabase
+        .from("pages")
+        .select("*")
+        .in("designId", designIds.length ? designIds : [""]);
+  
+      const pageIds = pagesData?.map((p) => p.pageId) || [];
+  
+      // 4. Layers
+      const { data: layerData } = await supabase
+        .from("layers")
+        .select("*")
+        .in("pageId", pageIds.length ? pageIds : [""]);
+  
+      // 5. Footer
+      const { data: webElementsData } = await supabase
+        .from("web-elements")
+        .select("*")
+        .eq("projectId", projectId)
+        .single();
+  
+      // 6. Services
+      const { data: serviceData } = await supabase
+        .from("services")
+        .select("*")
+        .eq("projectId", projectId);
+  
+
+      // 7. Compile export
+      const exportData = {
+        projectData,
+        serviceData,
+        webElementsData: {
+          projectId,
+          navbarType,
+          navbarData: webElementsData?.navBarData?
+            JSON.parse(webElementsData?.navBarData) : {},
+          footerType,
+          footerData: webElementsData?.footerData?
+            JSON.parse(webElementsData?.footerData) : {},
+        },
+        designData,
+        pagesData,
+        layerData,
+      };
+  
+      // 8. Download as file
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: "application/json",
+      });
+  
+      const title = projectData?.projectTitle || "project";
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${title}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Error generating JSON:", err);
+      setError("Failed to generate JSON. Check console for details.");
+    }
+  };
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 px-6">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-        
+
         {/* Title Section */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-extrabold text-gray-900">enJerneering UI Viewer</h1>
@@ -97,7 +185,7 @@ const DebugPage: React.FC = () => {
         </div>
 
         <p className="text-gray-600 text-center mb-6">
-          Enter a <span className="font-semibold text-gray-800">Project ID</span> to navigate to the viewer or test the data.
+          Enter a <span className="font-semibold text-gray-800">Project ID</span> to navigate to the viewer, test the data, or export the JSON.
         </p>
 
         {/* Input */}
@@ -112,8 +200,8 @@ const DebugPage: React.FC = () => {
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          {/* Buttons with fixed width */}
-          <div className="flex space-x-4">
+          {/* Buttons */}
+          <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={handleNavigate}
               className="w-48 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 rounded-lg transition duration-300"
@@ -126,6 +214,13 @@ const DebugPage: React.FC = () => {
               className="w-48 bg-gray-300 hover:bg-gray-400 text-gray-900 font-semibold py-3 rounded-lg transition duration-300"
             >
               Data Test
+            </button>
+
+            <button
+              onClick={downloadJson}
+              className="w-48 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300"
+            >
+              Download JSON
             </button>
           </div>
         </div>

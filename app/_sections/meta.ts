@@ -32,7 +32,7 @@ export const headerData: HeaderData = {
   buttons: [],
   tagLine: "enJerneering - Innovate Beyond",
   imgUrl: "/img/cryo.jpeg",
-  videoUrl: "/videos/laser-resurfacing.mp4",
+  videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   background: "linear-gradient(to right, #ff7e5f, #feb47b)",
 };
 
@@ -122,11 +122,7 @@ export const navbarData: NavbarData = {
     { id: nanoid(), title: "Link 5", href: "#" },
     { id: nanoid(), title: "Link 6", href: "#" },
   ],
-  ctaButton: {
-    label: "Get Started",
-    href: "/",
-    color: "primary",
-  },
+  buttons: [],
   featuredData: [
     {
       imgUrl: "/img/cryo.jpeg",
@@ -144,9 +140,7 @@ export const navbarData: NavbarData = {
     },
   ],
   justifyContent: "center",
-  showContentFlags: {
-    ctaButton: "on",
-  },
+  isCtaButton: "on",
 };
 
 // Main Content
@@ -155,10 +149,9 @@ export const mainContentData: MainContentData = {
   title: "Medium length hero heading goes here",
   subtitle:
     "Lorem ipsum dolor sit amet consectetur. Nunc tincidunt pretium ut duis rhoncus. Et pulvinar aliquam malesuada eu praesent ullamcorper quam quam. ",
-   //added for successful Build changed TagLine to isTagLine
-    isTagline: "enJerneering - Innovate Beyond",
+  tagLine: "enJerneering - Innovate Beyond",
   imgUrl: "/img/bg-contact.png",
-  subHeading: [
+  subHeading:[
     {
       title: "Subheading 1",
       subtitle: "Duis aute irure dolor in reprehenderit in voluptate velit.",
@@ -171,14 +164,6 @@ export const mainContentData: MainContentData = {
       title: "Subheading 3",
       subtitle: "Duis aute irure dolor in reprehenderit in voluptate velit.",
     },
-    {
-      title: "Subheading 4",
-      subtitle: "Duis aute irure dolor in reprehenderit in voluptate velit.",
-    },
-    {
-      title: "Subheading 5",
-      subtitle: "Duis aute irure dolor in reprehenderit in voluptate velit.",
-    },
   ],
   gallery: [
     "/img/blogs/blog-1.jpeg",
@@ -188,7 +173,10 @@ export const mainContentData: MainContentData = {
     "/img/blogs/blog-detail-1.jpeg",
     "/img/blogs/blog-detail-2.jpeg",
   ],
-  videoUrl: "/videos/laser-resurfacing.mp4",
+  videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  isTagline: "on",
+  backgroundColor: "#00000",
+  textColor: "#fffff"
 };
 
 // Call to action

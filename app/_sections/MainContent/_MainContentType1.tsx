@@ -34,7 +34,6 @@ const MainContentType1: React.FC<MainContentProps> = ({ data }) => {
     tagLine,
     imgUrl,
     subHeading,
-    gallery, // will be needed for later additions
     backgroundColor,
     textColor,
     isTagline

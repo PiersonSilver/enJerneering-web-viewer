@@ -16,18 +16,13 @@ const ContactType4: React.FC<ContactProps> = ({ data }) => {
   const {
     title,
     subtitle,
-    phone,
     mail,
-    address,
-    imgUrl,
-    contactPhone,
-    contactEmail,
-    contactAddress,
     nameField,
     emailField,
     phoneField,
     messageField,
-    textColor
+    textColor,
+    mapSrc
   } = data;
 
   // add requried fields to be passed through to FormContact
@@ -37,14 +32,14 @@ const requiredFields = {nameField, emailField, phoneField, messageField, mail }
     <div className="bg-gray-50">
       <div className="mx-auto max-w-[1440px] px-6 py-20 lg:p-20 flex flex-col gap-10">
         <div className="mx-auto m-full md:max-w-screen-xl lg:max-w-none text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-800 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-800 sm:text-4xl" style={{color: textColor}}>
             {title}
           </h2>
-          <p className="mt-6 text-base text-neutral-500">{subtitle}</p>
+          <p className="mt-6 text-base text-neutral-500" style={{color: textColor}}>{subtitle}</p>
         </div>
         <div className="mx-auto w-full md:max-w-screen-xl lg:max-w-none grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
           <div>
-            {/* <iframe
+            { <iframe
               src={mapSrc}
               width="656"
               height="436"
@@ -52,7 +47,7 @@ const requiredFields = {nameField, emailField, phoneField, messageField, mail }
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-            ></iframe> */}
+            ></iframe> }
           </div>
           <div>
             <FormContact requiredFields={requiredFields} />
